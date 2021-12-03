@@ -1,3 +1,4 @@
+# %% Run me 1st if using VSCode Interactive Window
 from get_input import get_input
 
 # %% Puzzle 3 Part 1
