@@ -1,51 +1,4 @@
-# %% Run me 1st to load functions
-
-def get_input(text_file):
-    input_file = open(text_file, "r")
-    input_data = input_file.read()
-    input_list = input_data.splitlines()
-    return input_list
-
-
-# %% Puzzle 2 Part 1
-input_list = get_input("puzzle2.txt")
-
-distance = 0
-depth = 0
-
-for command in input_list:
-    if 'forward' in command:
-        distance += int(''.join(filter(str.isdigit, command)))
-    if 'down' in command:
-        depth += int(''.join(filter(str.isdigit, command)))
-    if 'up' in command:
-        depth -= int(''.join(filter(str.isdigit, command)))
-
-print(distance)
-print(depth)
-print(distance*depth)
-
-# %% Puzzle 2 Part 2
-input_list = get_input("puzzle2.txt")
-
-distance = 0
-depth = 0
-aim = 0
-
-# I'm sure there is a more elegant way to pull ints from string but it works
-for command in input_list:
-    if 'forward' in command:
-        magnitude = int(''.join(filter(str.isdigit, command)))
-        distance += magnitude
-        depth += magnitude * aim
-    if 'down' in command:
-        aim += int(''.join(filter(str.isdigit, command)))
-    if 'up' in command:
-        aim -= int(''.join(filter(str.isdigit, command)))
-
-print(distance)
-print(depth)
-print(distance*depth)
+from get_input import get_input
 
 # %% Puzzle 3 Part 1
 
@@ -208,5 +161,3 @@ co2 = int(reducing_list_2[0], 2)
 print(f"CO2 Scrubber Rating - {co2}")
 
 print(f"Life support rating - {oxygen * co2}")
-
-# %%
