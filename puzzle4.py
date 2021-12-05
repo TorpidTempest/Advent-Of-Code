@@ -25,11 +25,25 @@ for board in bingo_boards_interim:
     bingo_boards.append(new_board)
 
 # Adding Boolean to each element to determine whether it has been called
+# I think this is horrible, going to instead make an array of the same size to store booleans
+# for board in bingo_boards:
+#     for line in board:
+#         for i in range(5):
+#             line[i] = [line[i], False]
 
-for board in bingo_boards:
-    for line in board:
-        for i in range(5):
-            line[i] = [line[i], False]
+
+# Making a board to track which numbers have been called
+
+called = []
+
+
+
+def check_bingo(boards):
+    for board in boards:
+        bingo = False
+
+
+
 
 
 # %%
