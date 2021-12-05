@@ -24,5 +24,12 @@ for board in bingo_boards_interim:
         new_board.append(line.split())
     bingo_boards.append(new_board)
 
+# Adding Boolean to each element to determine whether it has been called
+
+for board in bingo_boards:
+    for line in board:
+        for i in range(5):
+            line[i] = [line[i], False]
+
 
 # %%
