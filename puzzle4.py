@@ -1,5 +1,7 @@
 # %% Puzzle 4 Part 1
 
+import numpy as np
+
 # Storing and cleaning the data
 file_1 = open("input_data/puzzle4-1.txt", "r")
 call_data = file_1.read()
@@ -24,17 +26,9 @@ for board in bingo_boards_interim:
         new_board.append(line.split())
     bingo_boards.append(new_board)
 
-# Adding Boolean to each element to determine whether it has been called
-# I think this is horrible, going to instead make an array of the same size to store booleans
-# for board in bingo_boards:
-#     for line in board:
-#         for i in range(5):
-#             line[i] = [line[i], False]
-
-
 # Making a board to track which numbers have been called
 
-called = []
+called = [[[0 for _ in range(5)] for _ in range(5)] for _ in range(len(bingo_boards))]
 
 
 
