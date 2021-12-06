@@ -40,7 +40,15 @@ for board in bingo_boards_interim:
 
 called = [[[False for _ in range(5)] for _ in range(5)] for _ in range(len(bingo_boards))]
 
-# Sub functions to check bing on rows and columns
+
+"""
+    There are now 2 3D arrays, one with int, one with boolean where each top level element
+    should be a board comprised of those types of input
+
+    ['int']['int']      [Bool][Bool]
+    ['int']['int']      [Bool][Bool]
+"""
+# Sub functions to check for bingo on rows and columns seperately
 # Messy AF but I'm getting frustrated, maybe clean this up later, maybe not
 
 def bingo_row(board):
@@ -55,7 +63,8 @@ def bingo_column(board):
         board[4][i] == True:
             return True
 
-# Creating a Function to check whether bingo has been achieved
+# Creating a Function to check whether bingo has been achieved for each board
+# If bingo is acheived it returns the winning board (-1) due to python indexing ofc
 
 def check_bingo(boards):
     for i in range(len(boards)):
@@ -70,7 +79,7 @@ def check_bingo(boards):
         return bingo
     
 
-# Creating a function to update boards as each number is called
+# Creating a function to call successive numbers then check for winners
 
 def run_bingo(call_list, bingo_boards, called):
     boards = len(bingo_boards)
@@ -102,6 +111,8 @@ def run_bingo(call_list, bingo_boards, called):
         f"Answer = {remaining * final}"
     
 
+
+# Run the Bingo machine to see which board will win
 run_bingo(call_list, bingo_boards, called)
 
 
