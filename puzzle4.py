@@ -1,7 +1,5 @@
 # %% Puzzle 4 Part 1
 
-import numpy as np
-
 # Storing and cleaning the data
 file_1 = open("input_data/puzzle4-1.txt", "r")
 call_data = file_1.read()
@@ -28,7 +26,7 @@ for board in bingo_boards_interim:
 
 # Making a board to track which numbers have been called
 
-called = [[[0 for _ in range(5)] for _ in range(5)] for _ in range(len(bingo_boards))]
+called = [[[False for _ in range(5)] for _ in range(5)] for _ in range(len(bingo_boards))]
 
 
 
