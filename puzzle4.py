@@ -1,21 +1,33 @@
 # %% Puzzle 4 Part 1
-
-# Storing and cleaning the data
+"""
+    Storing and cleaning the input data to be used later in the
+    task. Called numbers will be stored in call_list and each bingo 
+    boards will be stored in bingo_boards (a 3-d array). Finally a 
+    2nd 3d array 'called' is created to store whether each number is
+    called. I believe this is a simpler way to track this than adding
+    an additional level to the array. Maybe a class creation to store 
+    called as an attribute would be better but I'm not sure.
+"""
+# Storing and cleaning the data for called list
 file_1 = open("input_data/puzzle4-1.txt", "r")
 call_data = file_1.read()
 call_list = call_data.split(',')
 file_1.close()
 
+# Storing and cleaning data for bingo_boards, splitting string into boards
 file_2 = open("input_data/puzzle4-2.txt", "r")
 board_data = file_2.read()
 bingo_boards_messy = board_data.split('\n\n')
 file_2.close()
+
+# Splitting boards into lines
 
 bingo_boards_interim = []
 
 for board in bingo_boards_messy:
     bingo_boards_interim.append(board.splitlines())
 
+# Splitting lines into elements
 bingo_boards = []
 
 for board in bingo_boards_interim:
@@ -28,11 +40,45 @@ for board in bingo_boards_interim:
 
 called = [[[False for _ in range(5)] for _ in range(5)] for _ in range(len(bingo_boards))]
 
+# Sub functions to check bing on rows and columns
+# Messy AF but I'm getting frustrated, maybe clean this up later, maybe not
 
+def bingo_row(board):
+    for i in range(5):
+        if board[i][0] == board[i][1] == board[i][2] == board[i][3] == \
+        board[i][4] == True:
+            return True
+
+def bingo_column(board):
+    for i in range(5):
+        if board[0][i] == board[1][i] == board[2][i] == board[3][i] == \
+        board[4][i] == True:
+            return True
+
+# Creating a Function to check whether bingo has been achieved
 
 def check_bingo(boards):
-    for board in boards:
+    for i in range(len(boards)):
         bingo = False
+        if bingo_row(boards[i]) or bingo_column(boards[i]):
+            bingo = True
+            winning_board = i
+            break
+    if bingo == True:
+        return winning_board
+    else:
+        return bingo
+    
+
+    
+        
+        
+            
+
+
+
+
+# Creating a function to update boards as each number is called
 
 
 
