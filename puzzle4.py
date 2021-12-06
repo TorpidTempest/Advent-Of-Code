@@ -44,7 +44,7 @@ called = [[[False for _ in range(5)] for _ in range(5)] for _ in range(len(bingo
 """
     There are now 2 3D arrays, one with int, one with boolean where each top level element
     should be a board comprised of those types of input
-
+        Array 1            Array 2
     ['int']['int']      [Bool][Bool]
     ['int']['int']      [Bool][Bool]
 """
