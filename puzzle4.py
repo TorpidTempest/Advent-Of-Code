@@ -70,18 +70,39 @@ def check_bingo(boards):
         return bingo
     
 
-    
-        
-        
-            
-
-
-
-
 # Creating a function to update boards as each number is called
 
+def run_bingo(call_list, bingo_boards, called):
+    boards = len(bingo_boards)
+    rows = len(bingo_boards[0])
+    columns = len(bingo_boards[0][0])
+    bingo = False
+    final = None
+    for number in call_list:
+        for i in range(boards):
+            for j in range(rows):
+                for k in range(columns):
+                    if bingo_boards[i][j][k] == number:
+                        called[i][j][k] = True
+        bingo = check_bingo(called)
+        if bingo != False:
+            final = int(number)
+            break
+    output = f"The winning board is board {bingo}"
+    print(output)
+    winner = bingo_boards[bingo]
+    winner_called = called[bingo]
+    remaining = 0
+    for i in range(rows):
+        for j in range(columns):
+            if winner_called[i][j] == False:
+                remaining += int(winner[i][j])
+    return bingo_boards[bingo], called[bingo],  \
+        f"Remaining = {remaining}", f"Final number = {final}" , \
+        f"Answer = {remaining * final}"
+    
 
-
+run_bingo(call_list, bingo_boards, called)
 
 
 # %%
