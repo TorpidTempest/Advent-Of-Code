@@ -11,7 +11,8 @@
 
 class board_class():
     """
-    A class to store a bingo board and check for completion,
+        A class to store a bingo board, track which numbers have been called on the
+        board and to tell whether a bingo has been achieved on the board.
     """
 
     def __init__(self, number, boards):
