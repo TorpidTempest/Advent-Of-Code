@@ -20,29 +20,70 @@ ocean_floor = np.zeros((1000, 1000), dtype=np.int32)
 
 
 
-def add_lines(coords_set, ocean_floor):
+def add_lines_1(coords_set, ocean_floor):
     x1, x2 = int(coords_set[0][0]), int(coords_set[1][0])
     y1, y2 = int(coords_set[0][1]), int(coords_set[1][1])
     ascending = 1
-    if x1 == x2 and y1 == y2:
-        ocean_floor[x1][y1] += 1
-    elif x1 == x2:
+    if x1 == x2:
         x = x1
         if y1 > y2:
             ascending = -1
-        for y in range(y1, y2, ascending):
+        for y in range(y1, y2 + ascending, ascending):
             ocean_floor[x][y] +=1
 
     elif y1 == y2:
         y = y1
         if x1 > x2:
             ascending = -1
-        for x in range(x1, x2, ascending):
+        for x in range(x1, x2 + ascending, ascending):
             ocean_floor[x][y] += 1
+
+def add_lines_2(coords_set, ocean_floor):
+    x1, x2 = int(coords_set[0][0]), int(coords_set[1][0])
+    y1, y2 = int(coords_set[0][1]), int(coords_set[1][1])
+    ascending = 1
+    if x1 == x2:
+        x = x1
+        if y1 > y2:
+            ascending = -1
+        for y in range(y1, y2 + ascending, ascending):
+            ocean_floor[x][y] +=1
+
+    elif y1 == y2:
+        y = y1
+        if x1 > x2:
+            ascending = -1
+        for x in range(x1, x2 + ascending, ascending):
+            ocean_floor[x][y] += 1
+
+    elif abs(y2 - y1) == abs(x2 - x1):
+        steps = abs(x2 - x1) + 1
+        x_iterator, y_iterator = 1, 1
+        if x1 > x2:
+            x_iterator = -1
+        if y1 > y2:
+            y_iterator = -1
+        x, y = x1, y1
+        for _ in range(steps):
+            ocean_floor[x][y] += 1
+            x += x_iterator
+            y += y_iterator
 
 def puzzle_1():
     for coords in final_list:
-        add_lines(coords, ocean_floor)
+        add_lines_1(coords, ocean_floor)
+
+    danger_zones = 0
+    for x in ocean_floor:
+        for y in x:
+            if y > 1:
+                danger_zones += 1
+
+    print(f'The number of danger zones = {danger_zones}')
+
+def puzzle_2():
+    for coords in final_list:
+        add_lines_2(coords, ocean_floor)
 
     danger_zones = 0
     for x in ocean_floor:
