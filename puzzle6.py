@@ -31,16 +31,5 @@ def puzzle1(a_list):
         a_list = a_day_passes(a_list, cycle_length, maturity_lag)
         print(f'There are {len(a_list)} lanternfish after {i} days')
             
-# for _ in range(80)
-#     next_gen = 0
-#     for fish in int_list:
-#         if fish == 0:
-#             fish = cycle_length - 1
-#             next_gen += 1
-#         else:
-#             fish -= 1
-#     for _ in range(next_gen):
-#         int_list.append(cycle_length + maturity_lag - -1)
-#     return a_list
 
 # %%
