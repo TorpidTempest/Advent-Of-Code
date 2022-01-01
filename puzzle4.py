@@ -9,47 +9,6 @@
     called as an attribute would be better but I'm not sure.
 """
 
-class board_class():
-    """
-        A class to store a bingo board, track which numbers have been called on the
-        board and to tell whether a bingo has been achieved on the board.
-    """
-
-    def __init__(self, number, boards):
-        self.number = number
-        self.bingo = False
-        self.board = boards[number]
-        self.called = [[False for _ in range(5)] for _ in range(5)]
-
-    def bingo_row(self):
-        check_for = [True for _ in range(5)]
-        for row in self.called:
-            if row == check_for:
-                self.bingo = True
-                return
-
-    def bingo_column(self):
-        check_for = [True for _ in range(5)]
-        for column in range(5):
-            new_column = []
-            for row in self.called:
-                new_column.append(row[column])
-            if new_column == check_for:
-                self.bingo = True
-                return
-
-    def check_bingo(self):
-        bingo_row(self)
-        if self.bingo == True:
-            return True
-        bingo_column(self)
-        if self.bingo == True:
-            return True
-        return False
-
-
-
-
 # Storing and cleaning the data for called list
 file_1 = open("input_data/puzzle4-1.txt", "r")
 call_data = file_1.read()
@@ -80,7 +39,7 @@ for board in bingo_boards_interim:
 
 # Making a board to track which numbers have been called
 
-# called = [[[False for _ in range(5)] for _ in range(5)] for _ in range(len(bingo_boards))]
+called = [[[False for _ in range(5)] for _ in range(5)] for _ in range(len(bingo_boards))]
 
 
 
@@ -90,17 +49,17 @@ for board in bingo_boards_interim:
 # Sub functions to check for bingo on rows and columns seperately
 # Messy AF but I'm getting frustrated, maybe clean this up later, maybe not
 
-# def bingo_row(board):
-#     for i in range(5):
-#         if board[i][0] == board[i][1] == board[i][2] == board[i][3] == \
-#         board[i][4] == True:
-#             return True
+def bingo_row(board):
+    for i in range(5):
+        if board[i][0] == board[i][1] == board[i][2] == board[i][3] == \
+        board[i][4] == True:
+            return True
 
-# def bingo_column(board):
-#     for i in range(5):
-#         if board[0][i] == board[1][i] == board[2][i] == board[3][i] == \
-#         board[4][i] == True:
-#             return True
+def bingo_column(board):
+    for i in range(5):
+        if board[0][i] == board[1][i] == board[2][i] == board[3][i] == \
+        board[4][i] == True:
+            return True
 
 # Creating a Function to check whether bingo has been achieved for each board
 # If bingo is acheived it returns the winning board (-1) due to python indexing ofc
