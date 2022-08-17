@@ -1,23 +1,6 @@
 # %%
-from answers.get_input import get_input
+from get_input import get_input
 import numpy as np
-
-raw_input = get_input("input_data/puzzle5.txt")
-input_list = []
-for line in raw_input:
-    line = line.split(' -> ')
-    input_list.append(line)
-final_list = []
-for coords in input_list:
-    final_coords = []
-    for coord in coords:
-        final_coords.append(coord.split(','))
-    final_list.append(final_coords)
-
-ocean_floor = np.zeros((1000, 1000), dtype=np.int32)
-
-
-
 
 
 def add_lines_1(coords_set, ocean_floor):
@@ -29,7 +12,7 @@ def add_lines_1(coords_set, ocean_floor):
         if y1 > y2:
             ascending = -1
         for y in range(y1, y2 + ascending, ascending):
-            ocean_floor[x][y] +=1
+            ocean_floor[x][y] += 1
 
     elif y1 == y2:
         y = y1
@@ -37,6 +20,7 @@ def add_lines_1(coords_set, ocean_floor):
             ascending = -1
         for x in range(x1, x2 + ascending, ascending):
             ocean_floor[x][y] += 1
+
 
 def add_lines_2(coords_set, ocean_floor):
     x1, x2 = int(coords_set[0][0]), int(coords_set[1][0])
@@ -47,7 +31,7 @@ def add_lines_2(coords_set, ocean_floor):
         if y1 > y2:
             ascending = -1
         for y in range(y1, y2 + ascending, ascending):
-            ocean_floor[x][y] +=1
+            ocean_floor[x][y] += 1
 
     elif y1 == y2:
         y = y1
@@ -69,7 +53,21 @@ def add_lines_2(coords_set, ocean_floor):
             x += x_iterator
             y += y_iterator
 
-def puzzle_1():
+
+def puzzle1():
+    raw_input = get_input("../input_data/puzzle5.txt")
+    input_list = []
+    for line in raw_input:
+        line = line.split(" -> ")
+        input_list.append(line)
+    final_list = []
+    for coords in input_list:
+        final_coords = []
+        for coord in coords:
+            final_coords.append(coord.split(","))
+        final_list.append(final_coords)
+
+    ocean_floor = np.zeros((1000, 1000), dtype=np.int32)
     for coords in final_list:
         add_lines_1(coords, ocean_floor)
 
@@ -79,9 +77,23 @@ def puzzle_1():
             if y > 1:
                 danger_zones += 1
 
-    print(f'The number of danger zones = {danger_zones}')
+    return f"The number of danger zones = {danger_zones}"
 
-def puzzle_2():
+
+def puzzle2():
+    raw_input = get_input("../input_data/puzzle5.txt")
+    input_list = []
+    for line in raw_input:
+        line = line.split(" -> ")
+        input_list.append(line)
+    final_list = []
+    for coords in input_list:
+        final_coords = []
+        for coord in coords:
+            final_coords.append(coord.split(","))
+        final_list.append(final_coords)
+
+    ocean_floor = np.zeros((1000, 1000), dtype=np.int32)
     for coords in final_list:
         add_lines_2(coords, ocean_floor)
 
@@ -91,6 +103,15 @@ def puzzle_2():
             if y > 1:
                 danger_zones += 1
 
-    print(f'The number of danger zones = {danger_zones}')
+    return f"The number of danger zones = {danger_zones}"
+
 
 # %%
+
+
+def main() -> None:
+    print(f"Part 1: {puzzle1()}\nPart 2: {puzzle2()}")
+
+
+if __name__ == "__main__":
+    main()

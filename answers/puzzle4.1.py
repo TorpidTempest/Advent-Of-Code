@@ -1,4 +1,5 @@
 # %% Puzzle 4 Part 1
+# ! DO NOT TOUCH, IMPLEMENTED IN 4.2 CORRECTLY
 """
     Storing and cleaning the input data to be used later in the
     task. Called numbers will be stored in call_list and each bingo 

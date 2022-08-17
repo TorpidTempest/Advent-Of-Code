@@ -1,19 +1,23 @@
 # %%
-from answers.get_input import get_input
+from get_input import get_input
 
-raw_input = get_input("input_data/puzzle6.txt")
-input_list = []
-for line in raw_input:
-    input_list = line.split(',')
-int_list = []
-for number in input_list:
-    int_list.append(int(number))
+
+def get_list():
+    raw_input = get_input("../input_data/puzzle6.txt")
+    input_list = []
+    for line in raw_input:
+        input_list = line.split(",")
+    int_list = []
+    for number in input_list:
+        int_list.append(int(number))
+    return int_list
+
 
 def a_day_passes(a_list, cycle_length, maturity_lag):
     new_fish = 0
     for i in range(len(a_list)):
         if a_list[i] == 0:
-            a_list[i] = (cycle_length - 1)
+            a_list[i] = cycle_length - 1
             new_fish += 1
         else:
             a_list[i] -= 1
@@ -28,8 +32,9 @@ def puzzle1(a_list):
     maturity_lag = 2
     for i in range(1, days + 1):
         a_list = a_day_passes(a_list, cycle_length, maturity_lag)
-    print(f'There are {len(a_list)} lanternfish after {days} days')
-            
+    return f"There are {len(a_list)} lanternfish after {days} days"
+
+
 def puzzle2(a_list):
     days = 256
     cycle_length = 7
@@ -51,6 +56,15 @@ def puzzle2(a_list):
     fish_sum = 0
     for day in fishDict:
         fish_sum += fishDict[day]
-    print(f'After {days} days there are {fish_sum} fish')
+    return f"After {days} days there are {fish_sum} fish"
+
 
 # %%
+
+
+def main() -> None:
+    print(f"Part 1: {puzzle1(get_list())}\nPart 2: {puzzle2(get_list())}")
+
+
+if __name__ == "__main__":
+    main()

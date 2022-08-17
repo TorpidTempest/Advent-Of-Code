@@ -2,15 +2,15 @@
 # Storing and cleaning the data for called list
 def main():
 
-    file_1 = open("input_data/puzzle4-1.txt", "r")
+    file_1 = open("../input_data/puzzle4-1.txt", "r")
     call_data = file_1.read()
-    call_list = call_data.split(',')
+    call_list = call_data.split(",")
     file_1.close()
 
     # Storing and cleaning data for bingo_boards, splitting string into boards
-    file_2 = open("input_data/puzzle4-2.txt", "r")
+    file_2 = open("../input_data/puzzle4-2.txt", "r")
     board_data = file_2.read()
-    bingo_boards_messy = board_data.split('\n\n')
+    bingo_boards_messy = board_data.split("\n\n")
     file_2.close()
 
     # Splitting boards into lines
@@ -32,35 +32,58 @@ def main():
     final_boards = {}
 
     for i in range(len(bingo_boards)):
-        final_boards.update({i+1 : bingo_boards[i]})
+        final_boards.update({i + 1: bingo_boards[i]})
 
-    called = {i + 1:[[False for _ in range(5)] for _ in range(5)] for i in range(len(bingo_boards))}
+    called = {
+        i + 1: [[False for _ in range(5)] for _ in range(5)]
+        for i in range(len(bingo_boards))
+    }
     run(call_list, final_boards, called, True)
     run(call_list, final_boards, called, False)
+
+
 """
 Sub functions from original solution to check for bingo on rows and columns 
 seperately. Perhaps not ideal but sufficient for now to test new
 dictionary model of the bingo boards.
 """
+
+
 def bingo_row(board):
     for i in range(5):
-        if board[i][0] == board[i][1] == board[i][2] == board[i][3] == \
-        board[i][4] == True:
+        if (
+            board[i][0]
+            == board[i][1]
+            == board[i][2]
+            == board[i][3]
+            == board[i][4]
+            == True
+        ):
             return True
+
 
 def bingo_column(board):
     for i in range(5):
-        if board[0][i] == board[1][i] == board[2][i] == board[3][i] == \
-        board[4][i] == True:
+        if (
+            board[0][i]
+            == board[1][i]
+            == board[2][i]
+            == board[3][i]
+            == board[4][i]
+            == True
+        ):
             return True
 
+
 # Creating a Function to check whether bingo has been achieved for a board
+
 
 def check_bingo(board):
     bingo = False
     if bingo_row(board) or bingo_column(board):
         bingo = True
     return bingo
+
 
 def check_all(boards: dict):
     complete = []
@@ -70,9 +93,9 @@ def check_all(boards: dict):
             complete.append(num)
     return complete
 
+
 # Function to simulate bingo gaames
 def run(call_list: list, boards: dict, called: dict, win: bool):
-    num_of_boards = len(boards)
     rows = len(boards[1])
     columns = len(boards[1][0])
     final_number = None
@@ -118,8 +141,9 @@ def run(call_list: list, boards: dict, called: dict, win: bool):
                 for key in complete:
                     del boards[key], called[key]
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
-        
-        
+
+
 # %%
