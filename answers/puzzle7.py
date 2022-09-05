@@ -1,11 +1,10 @@
 # %% Run me 1st if using VSCode Interactive Window
-from math import factorial
 from statistics import mean, median
 from get_input import get_input
 
 # %% Puzzle 1 Part 1
 def part1() -> int:
-    raw = get_input("../input_data/puzzle7.txt")
+    raw = get_input("puzzle7.txt")
     # * Funky flattened list comprehension, first time trying this
     numbers = [int(num) for line in raw for num in line.split(",")]
 
@@ -20,7 +19,7 @@ def part1() -> int:
 
 # %%
 def part2() -> int:
-    raw2 = get_input("../input_data/puzzle7.txt")
+    raw2 = get_input("puzzle7.txt")
     # * Funky flattened list comprehension, first time trying this
     numbers2 = [int(num) for line in raw2 for num in line.split(",")]
 

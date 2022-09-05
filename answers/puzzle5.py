@@ -55,7 +55,7 @@ def add_lines_2(coords_set, ocean_floor):
 
 
 def puzzle1():
-    raw_input = get_input("../input_data/puzzle5.txt")
+    raw_input = get_input("puzzle5.txt")
     input_list = []
     for line in raw_input:
         line = line.split(" -> ")
@@ -81,7 +81,7 @@ def puzzle1():
 
 
 def puzzle2():
-    raw_input = get_input("../input_data/puzzle5.txt")
+    raw_input = get_input("puzzle5.txt")
     input_list = []
     for line in raw_input:
         line = line.split(" -> ")

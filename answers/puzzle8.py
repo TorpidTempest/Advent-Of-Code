@@ -68,7 +68,7 @@ def decode_display(inputs: Strings, outputs: Strings) -> int:
 
 # %%
 def part1() -> int:
-    raw = get_input("../input_data/puzzle8.txt")
+    raw = get_input("puzzle8.txt")
     output = []
     for line in raw:
         output_line = line.split("|")
@@ -85,7 +85,7 @@ def part1() -> int:
 
 # %%
 def part2() -> int:
-    raw2 = get_input("../input_data/puzzle8.txt")
+    raw2 = get_input("puzzle8.txt")
     output2 = []
     for line in raw2:
         output_line = line.split("|")

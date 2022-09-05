@@ -3,13 +3,11 @@ from get_input import get_input
 
 # %% Puzzle 3 Part 1
 def puzzle1():
-    input_list = get_input("../input_data/puzzle3.txt")
+    input_list = get_input("puzzle3.txt")
 
-    """
-    The most commonly occur bit in each position gives the gamma rate,
-    the least common gives the epsilon rate. The solution requires these 2 
-    numbers be multiplied together and expressed in decimal
-    """
+    # The most commonly occur bit in each position gives the gamma rate,
+    # the least common gives the epsilon rate. The solution requires these 2 
+    # numbers be multiplied together and expressed in decimal
 
     # Create an empty list to store the count of each of the bits
     digits = len(input_list[0])

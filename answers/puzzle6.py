@@ -3,7 +3,7 @@ from get_input import get_input
 
 
 def get_list():
-    raw_input = get_input("../input_data/puzzle6.txt")
+    raw_input = get_input("puzzle6.txt")
     input_list = []
     for line in raw_input:
         input_list = line.split(",")
