@@ -30,7 +30,7 @@ def part2() -> int:
     for num in numbers2:
         distance2 = abs(num - meeting_point2)
         fuel2 += sum(range(distance2 + 1))
-        return fuel2
+    return fuel2
 
 
 # %%

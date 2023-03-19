@@ -3,7 +3,7 @@ from get_input import get_input
 import numpy as np
 
 
-def add_lines_1(coords_set, ocean_floor):
+def add_lines_1(coords_set, ocean_floor) -> None:
     x1, x2 = int(coords_set[0][0]), int(coords_set[1][0])
     y1, y2 = int(coords_set[0][1]), int(coords_set[1][1])
     ascending = 1
@@ -22,7 +22,7 @@ def add_lines_1(coords_set, ocean_floor):
             ocean_floor[x][y] += 1
 
 
-def add_lines_2(coords_set, ocean_floor):
+def add_lines_2(coords_set, ocean_floor) -> None:
     x1, x2 = int(coords_set[0][0]), int(coords_set[1][0])
     y1, y2 = int(coords_set[0][1]), int(coords_set[1][1])
     ascending = 1
@@ -54,7 +54,7 @@ def add_lines_2(coords_set, ocean_floor):
             y += y_iterator
 
 
-def puzzle1():
+def puzzle1() -> str:
     raw_input = get_input("puzzle5.txt")
     input_list = []
     for line in raw_input:
@@ -80,7 +80,7 @@ def puzzle1():
     return f"The number of danger zones = {danger_zones}"
 
 
-def puzzle2():
+def puzzle2() -> str:
     raw_input = get_input("puzzle5.txt")
     input_list = []
     for line in raw_input:

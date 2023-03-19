@@ -4,6 +4,10 @@ from get_input import get_input
 Strings = list[str]
 
 
+def main() -> None:
+    print(f"Part 1: {part1()}\nPart 2: {part2()}")
+
+
 def decode_display(inputs: Strings, outputs: Strings) -> int:
     decoded = {
         0: {""},
@@ -102,9 +106,5 @@ def part2() -> int:
 
 
 # %%
-def main() -> None:
-    print(f"Part 1: {part1()}\nPart 2: {part2()}")
-
-
 if __name__ == "__main__":
     main()

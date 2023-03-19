@@ -1,15 +1,12 @@
 # %%
+from dataclasses import dataclass
 from enum import Enum
 from get_input import get_input
 
 
 # %% Classes to be used in solving problem
 class IsLowest(Enum):
-    """Is lowest options
-
-    Args:
-        Enum (_type_): enum vals
-    """
+    """Is lowest options"""
 
     NO = 1
     MAYBE = 2
@@ -17,11 +14,7 @@ class IsLowest(Enum):
 
 
 class Neighbour(Enum):
-    """Neighbour options
-
-    Args:
-        Enum (_type_): enum vals
-    """
+    """Neighbour options"""
 
     LEFT = 1
     RIGHT = 2
@@ -29,53 +22,60 @@ class Neighbour(Enum):
     BOTTOM = 4
 
 
+@dataclass
 class Coordinate:
-    """Coordinates
-
-    Returns:
-        _type_: N/A
-    """
+    """Coordinates"""
 
     x: int
     y: int
 
     def __repr__(self) -> str:
-        return f"""
-    X: {self.x}, 
-    Y: {self.y},
-    """
+        return f"""({self.x}, {self.y})"""
+
+    def __hash__(self) -> int:
+        return hash((self.x, self.y))
 
 
 class FloorPoint:
-    """Floor point metadata
-
-    Returns:
-        _type_: _
-    """
+    """Floor point metadata"""
 
     coordinates: Coordinate
     height: int
     is_lowest: IsLowest
+    basin: Coordinate | None
+    checked: bool
+
+    def __init__(
+        self,
+        coordinates: Coordinate,
+        height: int,
+        is_lowest: IsLowest,
+    ) -> None:
+        self.coordinates = coordinates
+        self.height = height
+        self.is_lowest = is_lowest
+        self.checked = False
+        self.basin = None
 
     def __repr__(self) -> str:
         return f"""
-    X: {self.coordinates.x}, 
-    Y: {self.coordinates.y},
+    coordinates: {self.coordinates}
     height: {self.height}
     is_lowest: {self.is_lowest}
+    basin: {self.basin}
     """
+
+    def set_basin(self, basin: Coordinate):
+        self.basin = basin
+
+    def set_checked(self):
+        self.checked = True
 
 
 # %%
 def get_floor_height(path: str) -> list[list[int]]:
-    """Get the floor heights from input data file
+    """Get the floor heights from input data file"""
 
-    Args:
-        path (str): pathname as a string
-
-    Returns:
-        list[list[int]]: a 2D list of floor heights
-    """
     lines = get_input(path)
     floor = []
     for line in lines:
@@ -84,101 +84,71 @@ def get_floor_height(path: str) -> list[list[int]]:
 
 
 # %%
-def get_floor_dict(floor: list[list[int]]) -> dict:
-    """Generate a dictionary of all th points in the floor
+def get_floor_dict(floor: list[list[int]]) -> dict[Coordinate, FloorPoint]:
+    """Generate a dictionary of all the points in the floor"""
 
-    Args:
-        floor (list[list[int]]): 2D array of data to become dictionary
-
-    Returns:
-        dict: Completed dictionary of metadata
-    """
-    out = dict()
+    out = dict[Coordinate, FloorPoint]()
     for y, row in enumerate(floor):
         for x, height in enumerate(row):
-            coord = Coordinate()
-            coord.x = x
-            coord.y = y
-            point = FloorPoint()
-            point.coordinates = coord
-            point.height = height
-            point.is_lowest = IsLowest.MAYBE
-            out.update({(x, y): point})
+            coord = Coordinate(x, y)
+            point = FloorPoint(coord, height, IsLowest.MAYBE)
+            out.update({(coord): point})
 
     return out
 
 
 # %%
 def is_lowest_point(
-    floor: list[list[int]], rows: int, cols: int, x_coordinate: int, y_coordinate: int
+    floor: list[list[int]], rows: int, cols: int, coord: Coordinate
 ) -> bool:
-    """Determines whether a point is a local lowest point
-
-    Args:
-        floor (list[list[int]]): floor array
-        rows (int): number of rows
-        cols (int): number of columns
-        x_coordinate (int): x coordinate
-        y_coordinate (int): y coordinate
-
-    Returns:
-        bool: result
-    """
+    """Determines whether a point is a local lowest point"""
 
     right = left = top = bottom = False
-    if x_coordinate == 0:
-        right = check_neighour(x_coordinate, y_coordinate, floor, Neighbour.RIGHT)
+    if coord.x == 0:
+        right = check_neighour(coord, floor, Neighbour.RIGHT)
         left = True
-    elif x_coordinate == cols - 1:
-        left = check_neighour(x_coordinate, y_coordinate, floor, Neighbour.LEFT)
+    elif coord.x == cols - 1:
+        left = check_neighour(coord, floor, Neighbour.LEFT)
         right = True
     else:
-        left = check_neighour(x_coordinate, y_coordinate, floor, Neighbour.LEFT)
-        right = check_neighour(x_coordinate, y_coordinate, floor, Neighbour.RIGHT)
+        left = check_neighour(coord, floor, Neighbour.LEFT)
+        right = check_neighour(coord, floor, Neighbour.RIGHT)
 
-    if y_coordinate == 0:
+    if coord.y == 0:
         top = True
-        bottom = check_neighour(x_coordinate, y_coordinate, floor, Neighbour.BOTTOM)
-    elif y_coordinate == rows - 1:
-        top = check_neighour(x_coordinate, y_coordinate, floor, Neighbour.TOP)
+        bottom = check_neighour(coord, floor, Neighbour.BOTTOM)
+    elif coord.y == rows - 1:
+        top = check_neighour(coord, floor, Neighbour.TOP)
         bottom = True
     else:
-        top = check_neighour(x_coordinate, y_coordinate, floor, Neighbour.TOP)
-        bottom = check_neighour(x_coordinate, y_coordinate, floor, Neighbour.BOTTOM)
+        top = check_neighour(coord, floor, Neighbour.TOP)
+        bottom = check_neighour(coord, floor, Neighbour.BOTTOM)
 
     return left and right and top and bottom
 
 
-def check_neighour(x: int, y: int, floor, direction: Neighbour) -> bool:
-    """Checks a point compared to one neightbour
-
-    Args:
-        x (int): _description_
-        y (int): _description_
-        floor (_type_): _description_
-        direction (Neighbour): _description_
-
-    Returns:
-        bool: _description_
-    """
+def check_neighour(coord: Coordinate, floor, direction: Neighbour) -> bool:
+    """Checks a point compared to one neightbour"""
     match direction:
         case Neighbour.LEFT:
-            return compare_points(x, y, x - 1, y, floor)
+            return compare_points(coord.x, coord.y, coord.x - 1, coord.y, floor)
         case Neighbour.BOTTOM:
-            return compare_points(x, y, x, y + 1, floor)
+            return compare_points(coord.x, coord.y, coord.x, coord.y + 1, floor)
         case Neighbour.TOP:
-            return compare_points(x, y, x, y - 1, floor)
+            return compare_points(coord.x, coord.y, coord.x, coord.y - 1, floor)
         case Neighbour.RIGHT:
-            return compare_points(x, y, x + 1, y, floor)
+            return compare_points(coord.x, coord.y, coord.x + 1, coord.y, floor)
 
 
 def compare_points(x1: int, y1: int, x2: int, y2: int, floor: list[list[int]]) -> bool:
+    """Checks if point 1 is lower than point 2"""
     return floor[y1][x1] < floor[y2][x2]
 
 
 # %%
-def solve_puzzle1(filepath: str):
-    lowest_points = []
+def get_lowest_values(filepath: str) -> list[int]:
+    """Get the depths of the local lowest points"""
+    lowest_values = []
     # get floor heights from file
     floor = get_floor_height(filepath)
     rows = len(floor)
@@ -187,34 +157,79 @@ def solve_puzzle1(filepath: str):
     floor_dict = get_floor_dict(floor)
     # iterate through coordinates to determine their status as low points
     for coordinates, point in floor_dict.items():
-        floor_dict.update()
-        if is_lowest_point(floor, rows, cols, coordinates[0], coordinates[1]):
+        if is_lowest_point(floor, rows, cols, coordinates):
             point.is_lowest = IsLowest.YES
-            lowest_points.append(point.height)
+            lowest_values.append(point.height)
         else:
             point.is_lowest = IsLowest.NO
 
     # return low_points
+    return lowest_values
+
+
+def get_lowest_points(filepath: str) -> list[FloorPoint]:
+    """Get the coordinates of the local lowest points"""
+    lowest_points = []
+    floor = get_floor_height(filepath)
+    rows = len(floor)
+    cols = len(floor[0])
+    floor_dict = get_floor_dict(floor)
+
+    for coordinates, point in floor_dict.items():
+        if is_lowest_point(floor, rows, cols, coordinates):
+            point.is_lowest = IsLowest.YES
+            point.basin = point.coordinates
+            lowest_points.append(point)
+        else:
+            point.is_lowest = IsLowest.NO
+
     return lowest_points
 
 
-def puzzle1():
+def build_basins(
+    floor: dict[Coordinate, FloorPoint], low_points: list[FloorPoint]
+) -> dict[Coordinate, set[FloorPoint]]:
+    """Build up the basins from their lowest points until they merge with another
+    basin or hit a boundary (a point of height 9)"""
+    basins = dict[Coordinate, set[FloorPoint]]()
+    for coord, point in floor.items():
+        if point.height == 9:
+            point.basin = coord
+            basins.update({coord: set([point])})
+        if point in low_points:
+            point.basin = coord
+            basins.update({coord: set([point])})   
+    print(low_points)         
+    
+
+    return basins
+
+def puzzle1() -> tuple[list[int], int]:
+    """Solve puzzle 1"""
     input_data = "puzzle9.txt"
-    lowest_points = solve_puzzle1(input_data)
-    risk_factor = len(lowest_points)
-    for point in lowest_points:
+    lowest_values = get_lowest_values(input_data)
+    risk_factor = len(lowest_values)
+    for point in lowest_values:
         risk_factor += point
-    print(
-        f"PUZZLE 1\nLowest points are : {lowest_points} \nRisk factor: {risk_factor}\nNo of points: {len(lowest_points)}"
-    )
+
+    return (lowest_values, risk_factor)
 
 
 def puzzle2():
-    print("PUZZLE 2")
-
+    """Solve puzzle 2"""
+    input_data = "puzzle9-test.txt"
+    basins = build_basins(
+        get_floor_dict(get_floor_height(input_data)), get_lowest_points(input_data)
+    )
+    print(basins.keys())
 
 def main():
-    puzzle1()
+    """Run both puzzles"""
+    lowest_values, risk_factor = puzzle1()
+    print(
+        f"PUZZLE 1\nLowest points are : {lowest_values} \n"
+        + f"Risk factor: {risk_factor}\nNo of points: {len(lowest_values)}"
+    )
     print("\n")
     puzzle2()
 
