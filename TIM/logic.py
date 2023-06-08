@@ -10,7 +10,7 @@ class FullBeam:
 
     def switch_on(self):
         self.light = True
-        print("Full Beam switched ON")
+        print("\033[Full Beam switched ON")
         print(self)
 
     def switch_off(self):
