@@ -46,13 +46,10 @@ class LightBar:
 
 
 # This class is probably overkill but you get the idea hopefully of some OOP stuff with this
+@dataclass
 class LightController:
-    full_beams: FullBeam
-    light_bar: LightBar
-
-    def __init__(self) -> None:
-        self.full_beams = FullBeam()
-        self.light_bar = LightBar()
+    full_beams: FullBeam = FullBeam()
+    light_bar: LightBar = LightBar()
 
     def __str__(self) -> str:
         beam_status = "ON" if self.full_beams.light else "OFF"
