@@ -1,10 +1,8 @@
-# %%
 from dataclasses import dataclass
 from enum import Enum
 from get_input import get_input
 
 
-# %% Classes to be used in solving problem
 class IsLowest(Enum):
     """Is lowest options"""
 
@@ -36,34 +34,15 @@ class Coordinate:
         return hash((self.x, self.y))
 
 
+@dataclass
 class FloorPoint:
     """Floor point metadata"""
 
     coordinates: Coordinate
     height: int
     is_lowest: IsLowest
-    basin: Coordinate | None
-    checked: bool
-
-    def __init__(
-        self,
-        coordinates: Coordinate,
-        height: int,
-        is_lowest: IsLowest,
-    ) -> None:
-        self.coordinates = coordinates
-        self.height = height
-        self.is_lowest = is_lowest
-        self.checked = False
-        self.basin = None
-
-    def __repr__(self) -> str:
-        return f"""
-    coordinates: {self.coordinates}
-    height: {self.height}
-    is_lowest: {self.is_lowest}
-    basin: {self.basin}
-    """
+    basin: Coordinate | None = None
+    checked: bool = False
 
     def set_basin(self, basin: Coordinate):
         self.basin = basin
@@ -72,7 +51,6 @@ class FloorPoint:
         self.checked = True
 
 
-# %%
 def get_floor_height(path: str) -> list[list[int]]:
     """Get the floor heights from input data file"""
 
@@ -83,7 +61,6 @@ def get_floor_height(path: str) -> list[list[int]]:
     return floor
 
 
-# %%
 def get_floor_dict(floor: list[list[int]]) -> dict[Coordinate, FloorPoint]:
     """Generate a dictionary of all the points in the floor"""
 
@@ -97,7 +74,6 @@ def get_floor_dict(floor: list[list[int]]) -> dict[Coordinate, FloorPoint]:
     return out
 
 
-# %%
 def is_lowest_point(
     floor: list[list[int]], rows: int, cols: int, coord: Coordinate
 ) -> bool:
@@ -198,11 +174,11 @@ def build_basins(
             basins.update({coord: set([point])})
         if point in low_points:
             point.basin = coord
-            basins.update({coord: set([point])})   
-    print(low_points)         
-    
+            basins.update({coord: set([point])})
+    print(low_points)
 
     return basins
+
 
 def puzzle1() -> tuple[list[int], int]:
     """Solve puzzle 1"""
@@ -222,6 +198,7 @@ def puzzle2():
         get_floor_dict(get_floor_height(input_data)), get_lowest_points(input_data)
     )
     print(basins.keys())
+
 
 def main():
     """Run both puzzles"""
