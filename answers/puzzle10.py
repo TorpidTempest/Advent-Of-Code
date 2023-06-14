@@ -28,6 +28,8 @@ def find_incomplete(line: str) -> deque[str] | None:
             queue.append(CHAR_MAP[char])
         elif char != queue.pop():
             return None
+    if len(queue) == 0:
+        print("GOT HIM")
     return queue
 
 
@@ -46,15 +48,15 @@ def puzzle1(input: list[str]):
     return score
 
 
-def puzzle2(input: list[str]):
+def puzzle2(data_input: list[str]):
     CHAR_SCORES = {
         ")": 1,
         "]": 2,
         "}": 3,
-        "]": 4,
+        ">": 4,
     }
     scores: list[int] = []
-    for line in input:
+    for line in data_input:
         if res := find_incomplete(line):
             score = 0
             while res:
@@ -62,9 +64,7 @@ def puzzle2(input: list[str]):
                 score += CHAR_SCORES.get(res.pop(), 0)
             scores.append(score)
     scores.sort()
-    for score in scores:
-        print(score)
-    print(len(scores) // 2)
+    
     return scores[len(scores) // 2]
 
 
@@ -74,10 +74,10 @@ def main():
     input = get_input(file)
 
     first = puzzle1(input)
-    print(first)
+    print(f"1st: {first}")
     print("\n\n")
     second = puzzle2(input)
-    # print(second)
+    print(f"2nd: {second}")  # 1163597899 is too small  # 1132372595
 
 
 if __name__ == "__main__":
