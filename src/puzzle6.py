@@ -1,5 +1,5 @@
 # %%
-from get_input import get_input
+from utils.get_input import get_input
 
 
 def get_list():

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from enum import Enum
-from get_input import get_input
-
+from utils.get_input import get_input
+from utils.classes import Coordinate
 
 class IsLowest(Enum):
     """Is lowest options"""
@@ -19,19 +19,6 @@ class Neighbour(Enum):
     TOP = 3
     BOTTOM = 4
 
-
-@dataclass
-class Coordinate:
-    """Coordinates"""
-
-    x: int
-    y: int
-
-    def __repr__(self) -> str:
-        return f"""({self.x}, {self.y})"""
-
-    def __hash__(self) -> int:
-        return hash((self.x, self.y))
 
 
 @dataclass

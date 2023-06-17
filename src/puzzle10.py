@@ -1,5 +1,5 @@
 from collections import deque
-from get_input import get_input
+from utils.get_input import get_input
 from pathlib import Path
 
 
