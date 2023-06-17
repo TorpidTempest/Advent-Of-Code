@@ -71,7 +71,7 @@ def puzzle2(data_input: list[str]):
 def main():
     """Run both puzzles"""
     file = f"{Path(__file__).name.split('.')[0]}.txt"
-    input = get_input(file)
+    input = get_input(file_name=file)
 
     first = puzzle1(input)
     print(f"1st: {first}")

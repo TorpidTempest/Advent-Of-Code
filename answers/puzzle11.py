@@ -59,7 +59,7 @@ def generate_octopus_field(puzzle_input: list[str]) -> dict[Coordinate, Octopus]
 def update_energy(
     octopus_field: dict[Coordinate, Octopus], to_increment: list[Coordinate]
 ):
-    flashes: list[Coordinate] = [] # ? Increment all octopii to_increment
+    flashes: list[Coordinate] = []  # ? Increment all octopii to_increment
     for coord in to_increment:
         (octopus := octopus_field[coord]).increment()
         if octopus.flashed:
@@ -73,16 +73,15 @@ def update_energy(
     for coord in flashes:
         if octopus := octopus_field.get(coord):
             neighbours_flashed += octopus.get_neighbours()
-            
+
     update_energy(octopus_field, neighbours_flashed)
 
 
 def puzzle1():
-    puzzle_input = get_input("puzzle11.txt")
+    puzzle_input = get_input(file_name="puzzle11.txt")
     octopus_field = generate_octopus_field(puzzle_input)
-    
+
     for i in range(100):
-        print(i)
         update_energy(octopus_field, list(octopus_field.keys()))
         for octopus in octopus_field.values():
             octopus.reset_if_flashed()
@@ -92,10 +91,10 @@ def puzzle1():
         total_flashes += oct.flashes
 
     print(total_flashes)
-    
-    
+
+
 def puzzle2():
-    puzzle_input = get_input("puzzle11.txt")
+    puzzle_input = get_input(file_name="puzzle11.txt")
     octopus_field = generate_octopus_field(puzzle_input)
     i = 0
     while True:
@@ -107,13 +106,13 @@ def puzzle2():
             if flash:
                 flashed += 1
         if flashed == 100:
-            
-            print(i)
-            input()
 
+            print(i)
+            return i
 
 
 def main():
+    puzzle1()
     puzzle2()
 
 

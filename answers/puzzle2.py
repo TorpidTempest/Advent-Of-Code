@@ -3,7 +3,7 @@ from get_input import get_input
 
 # %% Puzzle 2 Part 1
 def puzzle1():
-    input_list = get_input("puzzle2.txt")
+    input_list = get_input(file_name="puzzle2.txt")
 
     distance = 0
     depth = 0
@@ -27,7 +27,7 @@ def puzzle1():
 
 # %% Puzzle 2 Part 2
 def puzzle2():
-    input_list = get_input("../input_data/puzzle2.txt")
+    input_list = get_input(file_name="../input_data/puzzle2.txt")
 
     distance = 0
     depth = 0

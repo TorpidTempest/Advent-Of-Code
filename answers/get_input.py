@@ -1,4 +1,7 @@
-def get_input(text_file: str) -> list[str]:
+from pathlib import Path
+
+
+def get_input(*, file_name: str = "", puzzle_number: str | int = 0) -> list[str]:
     """Opens the input data from the input_data directory
 
     Args:
@@ -7,9 +10,9 @@ def get_input(text_file: str) -> list[str]:
     Returns:
         list[str]: an array of the files lines
     """
-    DIRECTORY = "C:\\Users\\lis4d\\Desktop\\python_stuff\\Advent\\input_data\\"
-    input_file = open(DIRECTORY + text_file, "r", encoding="utf-8")
-    input_data = input_file.read()
-    input_list = input_data.splitlines()
-    input_file.close()
+    DIRECTORY = Path("C:\\Users\\lis4d\\Desktop\\python_stuff\\Advent\\input_data\\")
+    file = DIRECTORY / file_name if file_name else DIRECTORY / f"puzzle{puzzle_number}.txt"
+    with open(file, "r", encoding="utf-8") as f:
+        input_data = f.read()
+        input_list = input_data.splitlines()
     return input_list

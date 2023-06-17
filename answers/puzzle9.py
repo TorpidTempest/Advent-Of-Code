@@ -54,7 +54,7 @@ class FloorPoint:
 def get_floor_height(path: str) -> list[list[int]]:
     """Get the floor heights from input data file"""
 
-    lines = get_input(path)
+    lines = get_input(file_name=path)
     floor = []
     for line in lines:
         floor.append([int(x) for x in line])
