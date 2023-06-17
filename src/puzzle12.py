@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from get_input import get_input
+from utils.get_input import get_input
 
 
 @dataclass(slots=True)

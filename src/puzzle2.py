@@ -1,5 +1,5 @@
 # %% Run me 1st if using VSCode Interactive Window
-from get_input import get_input
+from utils.get_input import get_input
 
 # %% Puzzle 2 Part 1
 def puzzle1():

@@ -1,6 +1,6 @@
 # %% Run me 1st if using VSCode Interactive Window
 from statistics import mean, median
-from get_input import get_input
+from utils.get_input import get_input
 
 # %% Puzzle 1 Part 1
 def part1() -> int:

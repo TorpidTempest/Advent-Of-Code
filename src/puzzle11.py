@@ -1,12 +1,8 @@
 from dataclasses import dataclass
-from get_input import get_input
+from utils.get_input import get_input
+from utils.classes import Coordinate
 import itertools
 
-
-@dataclass(slots=True, frozen=True)
-class Coordinate:
-    x: int
-    y: int
 
 
 @dataclass(slots=True)
