@@ -1,212 +1,36 @@
-# %% Run me 1st to load functions
-
-def get_input(text_file):
-    input_file = open(text_file, "r")
-    input_data = input_file.read()
-    input_list = input_data.splitlines()
-    return input_list
+from utils.get_input import get_input
 
 
-# %% Puzzle 2 Part 1
-input_list = get_input("puzzle2.txt")
+def part1():
+    data = get_input(puzzle_number=1)
+    count, previous = 0, int(data[0])
+    for point in data:
+        if (current := int(point)) > previous:
+            count += 1
+        previous = current
 
-distance = 0
-depth = 0
+    return count
 
-for command in input_list:
-    if 'forward' in command:
-        distance += int(''.join(filter(str.isdigit, command)))
-    if 'down' in command:
-        depth += int(''.join(filter(str.isdigit, command)))
-    if 'up' in command:
-        depth -= int(''.join(filter(str.isdigit, command)))
 
-print(distance)
-print(depth)
-print(distance*depth)
+def part2():
+    data = get_input(puzzle_number=1)
+    int_data = [int(el) for el in data]
+    count = 0
+    previous = sum(int_data[:3])
+    for i in range(len(int_data) - 2):
+        current = sum(int_data[i : i + 3])
+        count += 1 if current > previous else 0
+        previous = current
 
-# %% Puzzle 2 Part 2
-input_list = get_input("puzzle2.txt")
+    return count
 
-distance = 0
-depth = 0
-aim = 0
 
-# I'm sure there is a more elegant way to pull ints from string but it works
-for command in input_list:
-    if 'forward' in command:
-        magnitude = int(''.join(filter(str.isdigit, command)))
-        distance += magnitude
-        depth += magnitude * aim
-    if 'down' in command:
-        aim += int(''.join(filter(str.isdigit, command)))
-    if 'up' in command:
-        aim -= int(''.join(filter(str.isdigit, command)))
+def main():
+    print("Puzzle 1")
+    print(f"Part 1: {part1()}")
 
-print(distance)
-print(depth)
-print(distance*depth)
+    print(f"Part 2: {part2()}")
 
-# %% Puzzle 3 Part 1
 
-input_list = get_input('puzzle3.txt')
-
-"""
-The most commonly occur bit in each position gives the gamma rate,
-the least common gives the epsilon rate. The solution requires these 2 
-numbers be multiplied together and expressed in decimal
-"""
-
-# Create an empty list to store the count of each of the bits
-digits = len(input_list[0])
-bit_count = []
-for _ in range(digits):
-    bit_count.append(0)
-
-# Iterate over bits of each number in input list to count which is more common
-for input_number in input_list:
-    for i in range(digits):
-        bit = input_number[i]
-        if bit == '1':
-            bit_count[i] +=1
-        else:
-            bit_count[i] -=1
-
-print(bit_count)
-
-# Find gamma
-
-# Create a new list where each element is the most common bit in that position
-number_list = []
-for number in bit_count:
-    if number > 0:
-        number_list.append(1)
-    else:
-        number_list.append(0)
-
-print(number_list)
-
-num_str = ''
-
-for element in number_list:
-    num_str += str(element)
-
-print(num_str)
-
-gamma = int(num_str, 2)
-
-print(f"Gamma - {gamma}")
-
-# Generate Epsilon (by mirroring above example)
-
-number_list_2 = []
-
-for number in bit_count:
-    if number > 0:
-        number_list_2.append(0)
-    else:
-        number_list_2.append(1)
-
-print(number_list_2)
-
-num_str_2 = ''
-
-for element in number_list_2:
-    num_str_2 += str(element)
-
-print(num_str_2)
-
-epsilon = int(num_str_2, 2)
-
-print(f"Epsilon - {epsilon}")
-
-print(f"Gamma * Epsilon - {gamma * epsilon}")
-# %% Puzzle 3 Part 2
-
-input_list = get_input('puzzle3.txt')
-
-# Create an empty list to store the count of each of the bits
-digits = len(input_list[0])
-bit_count = []
-for _ in range(digits):
-    bit_count.append(0)
-
-# Iterate over bits of each number in input list to count which is more common
-for input_number in input_list:
-    for i in range(digits):
-        bit = input_number[i]
-        if bit == '1':
-            bit_count[i] +=1
-        else:
-            bit_count[i] -=1
-
-# Create a new list where each element is the most common bit in that position
-number_list = []
-for number in bit_count:
-    if number > 0:
-        number_list.append(1)
-    else:
-        number_list.append(0)
-
-# Create a copy of the input list to be reduced at each digit
-reducing_list = []
-for element in input_list:
-    reducing_list.append(element)
-
-# Iterate through list removing numbers who have the least common digit in each place
-for digit in range(digits):
-    bit_count = 0
-    for input_number in reducing_list:
-        if input_number[digit] == '1':
-            bit_count += 1
-        else:
-            bit_count -= 1
-    bit = None
-    if bit_count >= 0:
-        bit = '1'
-    else:
-        bit = '0'
-    for input_number in reducing_list[:]:
-        if input_number[digit] != bit:
-            reducing_list.remove(input_number)
-    print(len(reducing_list))
-
-    if len(reducing_list) == 1:
-        break
-
-print(reducing_list)
-oxygen = int(reducing_list[0], 2)
-print(f"Oxygen Generator Rating - {oxygen}")
-
-# Create a copy of the input list to be reduced at each digit
-reducing_list_2 = []
-for element in input_list:
-    reducing_list_2.append(element)
-
-# Iterate through list removing numbers who have the least common digit in each place
-for digit in range(digits):
-    bit_count = 0
-    for input_number in reducing_list_2:
-        if input_number[digit] == '1':
-            bit_count += 1
-        else:
-            bit_count -= 1
-    bit = None
-    if bit_count >= 0:
-        bit = '0'
-    else:
-        bit = '1'
-    for input_number in reducing_list_2[:]:
-        if input_number[digit] != bit:
-            reducing_list_2.remove(input_number)
-    print(len(reducing_list_2))
-    if len(reducing_list_2) == 1:
-        break
-
-print(reducing_list_2)
-co2 = int(reducing_list_2[0], 2)
-print(f"CO2 Scrubber Rating - {co2}")
-
-print(f"Life support rating - {oxygen * co2}")
-
-# %%
+if __name__ == "__main__":
+    main()
