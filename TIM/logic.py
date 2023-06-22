@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import time
 
 
@@ -27,12 +27,12 @@ class LightBar:
     light: bool = False
 
     def switch_on(self):
-        print("Light Bar switched ON")
+        print("\033[2;36mLight Bar switched ON\033[0m")
         self.light = True
         print(self)
 
     def switch_off(self):
-        print("Light Bar switched OFF")
+        print("\033[1;31mLight Bar switched OFF\033[0m")
         self.light = False
         print(self)
 
@@ -48,8 +48,8 @@ class LightBar:
 # This class is probably overkill but you get the idea hopefully of some OOP stuff with this
 @dataclass
 class LightController:
-    full_beams: FullBeam = FullBeam()
-    light_bar: LightBar = LightBar()
+    full_beams: FullBeam = field(default_factory=FullBeam)
+    light_bar: LightBar = field(default_factory=LightBar)
 
     def __str__(self) -> str:
         beam_status = "ON" if self.full_beams.light else "OFF"
